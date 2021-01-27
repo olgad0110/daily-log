@@ -26,6 +26,14 @@ defmodule DailyLogWeb.CalendarLive do
     {:noreply, assign(socket, calendar: next_month(socket))}
   end
 
-  defp prev_month(%{assigns: %{calendar: calendar}}), do: calendar |> DailyLog.Calendar.build_prev_month()
-  defp next_month(%{assigns: %{calendar: calendar}}), do: calendar |> DailyLog.Calendar.build_next_month()
+  @impl true
+  def handle_event("update-calendar-month", %{"key" => _}, socket) do
+    {:noreply, socket}
+  end
+
+  defp prev_month(%{assigns: %{calendar: calendar}}),
+    do: calendar |> DailyLog.Calendar.build_prev_month()
+
+  defp next_month(%{assigns: %{calendar: calendar}}),
+    do: calendar |> DailyLog.Calendar.build_next_month()
 end

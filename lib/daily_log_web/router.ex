@@ -19,7 +19,7 @@ defmodule DailyLogWeb.Router do
     pipe_through :browser
 
     live "/", CalendarLive, :index
-    
+
     live_dashboard "/dashboard", metrics: DailyLogWeb.Telemetry
   end
 end
