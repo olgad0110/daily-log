@@ -18,7 +18,8 @@ defmodule DailyLogWeb.Router do
   scope "/", DailyLogWeb do
     pipe_through :browser
 
-    live "/", PageLive, :index
+    live "/", CalendarLive, :index
+    
     live_dashboard "/dashboard", metrics: DailyLogWeb.Telemetry
   end
 end

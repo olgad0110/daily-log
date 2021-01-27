@@ -1,0 +1,34 @@
+$colors: (
+  "green": $green, "green-light": $green-light,
+  "blue": $blue, "blue-light": $blue-light,
+  "orange": $orange, "orange-light": $orange-light,
+);
+
+@each $name, $color in $colors {
+  .#{$name} {
+    background-color: $color;
+  }
+
+  @each $second-name, $second-color in $colors {
+    .gradient-#{$name}-#{$second-name} {
+      background: linear-gradient(0.25turn, $color, $second-color);
+    }
+
+    @each $third-name, $third-color in $colors {
+      .gradient-#{$name}-#{$second-name}-#{$third-name} {
+        background: linear-gradient(0.25turn, $color, $second-color, $third-color);
+      }
+    }
+  }
+}
+
+.center {
+  text-align: center;
+}
+
+.link {
+  cursor: pointer;
+  color: $green;
+
+  &:hover { color: $green-light; }
+}
