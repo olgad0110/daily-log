@@ -11,16 +11,16 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  color: $green;
+  color: $grey;
 }
 
 a {
-  color: $green;
+  color: $grey;
   text-decoration: underline;
   cursor: pointer;
 
   &:hover {
-    color: $green-light;
+    color: $grey-light;
   }
 }
 
@@ -30,7 +30,7 @@ a {
 
   h1 {
     margin: 20px 0;
-    border-bottom: 2px solid $green-light;
+    border-bottom: 2px solid $grey-light;
     padding: 10px 20px;
   }
 }

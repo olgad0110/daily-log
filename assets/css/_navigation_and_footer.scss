@@ -1,6 +1,6 @@
 .navbar {
-  border-bottom: 1px $green solid;
-  background-color: $green-light;
+  border-bottom: 1px $grey solid;
+  background-color: $grey-light;
   padding: 0;
   display: inline-flex;
   width: 100vw;
@@ -8,11 +8,11 @@
   .title {
     font-weight: 600;
     padding: 20px 20px;
-    color: $green;
+    color: $grey;
     cursor: pointer;
 
     a {
-      color: $green;
+      color: $grey;
       text-decoration: none;
     }
   }
@@ -24,5 +24,5 @@
   width: 100vw;
   padding: 10px 0;
   margin: auto;
-  color: $green-light;
+  color: $grey-light;
 }
