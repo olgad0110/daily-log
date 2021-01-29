@@ -12,7 +12,7 @@
   <body>
     <div class="navbar">
       <div class="title">
-        <%= link "Daily Log", to: Routes.calendar_path(@conn, :index) %>
+        <%= link "Daily Log", to: Routes.live_path(@conn, DailyLogWeb.CalendarLive) %>
       </div>
     </div>
     <div class="content">

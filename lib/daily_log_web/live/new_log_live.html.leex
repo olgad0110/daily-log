@@ -1,0 +1,121 @@
+<div class="calendar-header">
+  <span></span>
+  <div>New log for <%= @day %></div>
+  <span></span>
+</div>
+
+<div class="column-section">
+  <div class="column-25"></div>
+  <div class="column-50">
+    <%= f = form_for @log_changeset, "#", [phx_change: :validate, phx_submit: :save] %>
+      <p class="orange-light"><%= @errors[:day] %></p>
+
+      <h4>How did you feel today? Choose one mood in each column.</h4>
+
+      <div class="column-section">
+        <div class="column-33">
+          <span>🌄 In the morning 🌄</span>
+
+          <div>
+            <%= checkbox f, :mood_morning_very_good %>
+            <label>very good</label>
+          </div>
+
+          <div>
+            <%= checkbox f, :mood_morning_good %>
+            <label>good</label>
+          </div>
+
+          <div>
+            <%= checkbox f, :mood_morning_neutral %>
+            <label>neutral</label>
+          </div>
+
+          <div>
+            <%= checkbox f, :mood_morning_bad %>
+            <label>bad</label>
+          </div>
+
+          <div>
+            <%= checkbox f, :mood_morning_very_bad %>
+            <label>very bad</label>
+          </div>
+
+          <p class="orange-light"><%= @errors[:mood_morning] %></p>
+        </div>
+
+        <div class="column-33">
+          <span>🌇 In the afternoon 🌇</span>
+
+          <div>
+            <%= checkbox f, :mood_afternoon_very_good %>
+            <label>very good</label>
+          </div>
+
+          <div>
+            <%= checkbox f, :mood_afternoon_good %>
+            <label>good</label>
+          </div>
+
+          <div>
+            <%= checkbox f, :mood_afternoon_neutral %>
+            <label>neutral</label>
+          </div>
+
+          <div>
+            <%= checkbox f, :mood_afternoon_bad %>
+            <label>bad</label>
+          </div>
+
+          <div>
+            <%= checkbox f, :mood_afternoon_very_bad %>
+            <label>very bad</label>
+          </div>
+
+          <p class="orange-light"><%= @errors[:mood_afternoon] %></p>
+        </div>
+
+        <div class="column-33">
+          <span>🌃 In the evening 🌃</span>
+
+          <div>
+            <%= checkbox f, :mood_evening_very_good %>
+            <label>very good</label>
+          </div>
+
+          <div>
+            <%= checkbox f, :mood_evening_good %>
+            <label>good</label>
+          </div>
+
+          <div>
+            <%= checkbox f, :mood_evening_neutral %>
+            <label>neutral</label>
+          </div>
+
+          <div>
+            <%= checkbox f, :mood_evening_bad %>
+            <label>bad</label>
+          </div>
+
+          <div>
+            <%= checkbox f, :mood_evening_very_bad %>
+            <label>very bad</label>
+          </div>
+
+          <p class="orange-light"><%= @errors[:mood_evening] %></p>
+        </div>
+      </div>
+
+      <h4>How would you describe your day?</h4>
+      <%= textarea f, :description, style: "width: 100%; height: 200px;" %>
+
+      <p class="orange-light"><%= @errors[:description] %></p>
+
+      <p>
+        <%= submit "Save", class: "btn #{unless @log_changeset.valid?, do: "btn-orange"}" %>
+      </p>
+    </form>
+  </div>
+  <div class="column-25"></div>
+</div>

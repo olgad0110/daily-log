@@ -20,7 +20,9 @@
   <% end %>
 
   <%= for day <- @calendar.days do %>
-    <div class="calendar-day-box <%= ["blue", "gradient-blue-blue-light", "blue-light", "gradient-blue-light-grey-light", "grey-light", "gradient-grey-light-orange-light", "orange-light", "gradient-orange-light-orange", "orange", "", "gradient-blue-light-grey-light-orange-light"] |> Enum.random() %>"><%= day.day %></div>
+    <div class="calendar-day-box <%= ["blue", "gradient-blue-blue-light", "blue-light", "gradient-blue-light-grey-light", "grey-light", "gradient-grey-light-orange-light", "orange-light", "gradient-orange-light-orange", "orange", "", "gradient-blue-light-grey-light-orange-light"] |> Enum.random() %>">
+      <%= live_patch day.day, to: Routes.live_path(@socket, DailyLogWeb.NewLogLive, %{day: %Date{year: @calendar.year, month: @calendar.month, day: day.day} |> Date.to_string()}) %>
+    </div>
   <% end %>
 
   <%= for _day <- @calendar.empty_days_after do %>

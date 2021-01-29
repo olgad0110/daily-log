@@ -32,3 +32,23 @@ $colors: (
 
   &:hover { color: $grey-light; }
 }
+
+.btn {
+  text-decoration: none;
+  color: $black;
+  border: 1px solid $grey;
+  border-radius: 5px;
+  padding: 5px;
+  background-color: $grey-light;
+  cursor: pointer;
+  font-size: $font-size;
+
+  &:hover {
+    color: $black;
+    background-color: $grey;
+  }
+}
+
+.btn-orange {
+  background-color: $orange;
+}
