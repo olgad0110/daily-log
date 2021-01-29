@@ -46,5 +46,7 @@ defmodule DailyLogWeb.NewLogLive do
         String.replace(acc, "%{#{key}}", to_string(value))
       end)
     end)
+    |> Enum.map(fn {field, msg} -> {field, "#{field} #{Enum.join(msg, ", ")}"} end)
+    |> Enum.into(%{})
   end
 end
