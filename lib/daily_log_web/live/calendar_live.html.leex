@@ -20,21 +20,15 @@
   <% end %>
 
   <%= for day <- @calendar.days do %>
-    <div class="calendar-day-box <%= unless is_nil(day.log), do: day.log.css_class %>">
-      <%= live_patch day.day, to: Routes.live_path(@socket, DailyLogWeb.LogLive, %{day: day.date |> Date.to_string()}) %>
-    </div>
+    <%= live_patch(
+      to: Routes.live_path(@socket, DailyLogWeb.LogLive, %{day: day.date |> Date.to_string()}),
+      class: "calendar-day-box #{unless is_nil(day.log), do: day.log.css_class}"
+    ) do %>
+      <%= day.day %>
+    <% end %>
   <% end %>
 
   <%= for _day <- @calendar.empty_days_after do %>
     <div class="calendar-day-box calendar-day-box-empty"></div>
   <% end %>
 </div>
-
-<br><br><br><br><br><br>
-
-Legend:
-<div class="legend blue">very bad mood</div>
-<div class="legend blue-light">bad mood</div>
-<div class="legend grey-light">neutral mood</div>
-<div class="legend orange-light">good mood</div>
-<div class="legend orange">very good mood</div>

@@ -40,13 +40,15 @@
 
   .calendar-day-box {
     display: inline-block;
-    height: 90px;
+    height: 30px;
     width: 12%;
     margin: 5px;
-    padding: 5px;
+    padding: 30px 5px;
     border: 1px $black solid;
     text-align: center;
     font-weight: bold;
+    font-size: 18pt;
+    text-decoration: none;
   }
 
   .calendar-day-box-empty {
