@@ -2,14 +2,7 @@ defmodule DailyLog.LogsTest do
   use DailyLog.DataCase
   alias DailyLog.Logs
 
-  describe "new/1" do
-    test "returns changeset with day" do
-      assert %Ecto.Changeset{changes: %{day: ~D[2021-01-30]}, errors: [], valid?: true} =
-               Logs.new(~D[2021-01-30])
-    end
-  end
-
-  describe "validate/1" do
+  describe "validate/2" do
     test "returns invalid changeset with empty params" do
       assert %Ecto.Changeset{
                errors: [
@@ -29,7 +22,7 @@ defmodule DailyLog.LogsTest do
                  {:description, {"can't be blank", [validation: :required]}}
                ],
                valid?: false
-             } = Logs.validate(%{})
+             } = Logs.validate(%Logs.Log{}, %{})
     end
 
     test "returns valid changeset with validations met" do
@@ -60,7 +53,7 @@ defmodule DailyLog.LogsTest do
                errors: [],
                valid?: true
              } =
-               Logs.validate(%{
+               Logs.validate(%Logs.Log{}, %{
                  "day" => ~D[2020-02-02],
                  "description" => "a description",
                  "mood_afternoon_bad" => "false",
@@ -82,10 +75,19 @@ defmodule DailyLog.LogsTest do
     end
   end
 
-  describe "create/1" do
-    test "persists changeset" do
-      changeset = Logs.new(~D[2021-01-01])
-      assert {:ok, %Logs.Log{id: id}} = Logs.create(changeset)
+  describe "insert_or_update/1" do
+    test "persists log if not yet in db" do
+      changeset = build(:log, day: ~D[2021-01-01]) |> Ecto.Changeset.change(%{})
+
+      assert {:ok, %Logs.Log{id: id}} = Logs.insert_or_update(changeset)
+
+      assert [%Logs.Log{id: ^id}] = Repo.all(Logs.Log)
+    end
+
+    test "updates log if already exists" do
+      changeset = insert(:log, day: ~D[2021-01-01]) |> Ecto.Changeset.change(%{description: "a"})
+
+      assert {:ok, %Logs.Log{id: id, description: "a"}} = Logs.insert_or_update(changeset)
 
       assert [%Logs.Log{id: ^id}] = Repo.all(Logs.Log)
     end

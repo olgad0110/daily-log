@@ -1,4 +1,4 @@
-defmodule DailyLogWeb.NewLogLive do
+defmodule DailyLogWeb.LogLive do
   use DailyLogWeb, :live_view
   use Phoenix.HTML
   alias DailyLog.Logs
@@ -6,22 +6,18 @@ defmodule DailyLogWeb.NewLogLive do
   @impl true
   def mount(%{"day" => day}, _session, socket) do
     day = Date.from_iso8601!(day)
-    log_changeset = %{"day" => day} |> Logs.validate()
+    log = Logs.get_or_init_by_day(day)
 
-    {:ok,
-     assign(socket,
-       log_changeset: log_changeset,
-       errors: translate_errors(log_changeset),
-       day: day
-     )}
+    {:ok, assign(socket, log: log, log_changeset: log, errors: %{}, day: day)}
   end
 
   @impl true
   def handle_event("validate", %{"log" => log_params}, socket) do
     log_changeset =
-      log_params
-      |> Map.put("day", socket.assigns.day)
-      |> Logs.validate()
+      Logs.validate(
+        socket.assigns.log,
+        log_params |> Map.put("day", socket.assigns.day)
+      )
 
     {:noreply,
      assign(socket, log_changeset: log_changeset, errors: translate_errors(log_changeset))}
@@ -29,7 +25,7 @@ defmodule DailyLogWeb.NewLogLive do
 
   @impl true
   def handle_event("save", _params, socket) do
-    case socket.assigns.log_changeset |> Logs.create() do
+    case socket.assigns.log_changeset |> Logs.insert_or_update() do
       {:ok, _} ->
         {:noreply, push_redirect(socket, to: Routes.live_path(socket, DailyLogWeb.CalendarLive))}
 

@@ -7,16 +7,7 @@ defmodule DailyLog.CalendarTest do
       days: [
         %Calendar.Day{day: 1, date: ~D[2020-12-01], day_of_the_week: 2},
         %Calendar.Day{day: 2, date: ~D[2020-12-02], day_of_the_week: 3},
-        %Calendar.Day{
-          day: 3,
-          date: ~D[2020-12-03],
-          day_of_the_week: 4,
-          log:
-            insert(:log,
-              day: ~D[2020-12-03],
-              css_class: "gradient-blue-light-grey-light-orange-light"
-            )
-        },
+        %Calendar.Day{day: 3, date: ~D[2020-12-03], day_of_the_week: 4},
         %Calendar.Day{day: 4, date: ~D[2020-12-04], day_of_the_week: 5},
         %Calendar.Day{day: 5, date: ~D[2020-12-05], day_of_the_week: 6},
         %Calendar.Day{day: 6, date: ~D[2020-12-06], day_of_the_week: 7},
@@ -28,27 +19,9 @@ defmodule DailyLog.CalendarTest do
         %Calendar.Day{day: 12, date: ~D[2020-12-12], day_of_the_week: 6},
         %Calendar.Day{day: 13, date: ~D[2020-12-13], day_of_the_week: 7},
         %Calendar.Day{day: 14, date: ~D[2020-12-14], day_of_the_week: 1},
-        %Calendar.Day{
-          day: 15,
-          date: ~D[2020-12-15],
-          day_of_the_week: 2,
-          log:
-            insert(:log,
-              day: ~D[2020-12-15],
-              css_class: "gradient-blue-light-grey-light-orange-light"
-            )
-        },
+        %Calendar.Day{day: 15, date: ~D[2020-12-15], day_of_the_week: 2},
         %Calendar.Day{day: 16, date: ~D[2020-12-16], day_of_the_week: 3},
-        %Calendar.Day{
-          day: 17,
-          date: ~D[2020-12-17],
-          day_of_the_week: 4,
-          log:
-            insert(:log,
-              day: ~D[2020-12-17],
-              css_class: "gradient-blue-light-grey-light-orange-light"
-            )
-        },
+        %Calendar.Day{day: 17, date: ~D[2020-12-17], day_of_the_week: 4},
         %Calendar.Day{day: 18, date: ~D[2020-12-18], day_of_the_week: 5},
         %Calendar.Day{day: 19, date: ~D[2020-12-19], day_of_the_week: 6},
         %Calendar.Day{day: 20, date: ~D[2020-12-20], day_of_the_week: 7},
@@ -85,6 +58,21 @@ defmodule DailyLog.CalendarTest do
       %Date{year: current_year, month: current_month} = Date.utc_today()
 
       assert %Calendar.Month{month: ^current_month, year: ^current_year} = Calendar.build_month()
+    end
+
+    test "builds monthly calendar structure with logs fetched from database", %{
+      december_2020_calendar: calendar
+    } do
+      [first_day | days] = calendar.days
+
+      first_day_with_log = %{
+        first_day
+        | log: DailyLog.Logs.Log.populate_virtual_fields(insert(:log, day: ~D[2020-12-01]))
+      }
+
+      expected_calendar = %{calendar | days: [first_day_with_log | days]}
+
+      assert ^expected_calendar = Calendar.build_month(~D[2020-12-04])
     end
   end
 

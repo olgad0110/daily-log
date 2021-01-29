@@ -21,7 +21,7 @@
 
   <%= for day <- @calendar.days do %>
     <div class="calendar-day-box <%= unless is_nil(day.log), do: day.log.css_class %>">
-      <%= live_patch day.day, to: Routes.live_path(@socket, DailyLogWeb.NewLogLive, %{day: day.date |> Date.to_string()}) %>
+      <%= live_patch day.day, to: Routes.live_path(@socket, DailyLogWeb.LogLive, %{day: day.date |> Date.to_string()}) %>
     </div>
   <% end %>
 
