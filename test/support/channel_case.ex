@@ -22,6 +22,7 @@ defmodule DailyLogWeb.ChannelCase do
       # Import conveniences for testing with channels
       import Phoenix.ChannelTest
       import DailyLogWeb.ChannelCase
+      import DailyLog.Factory
 
       # The default endpoint for testing
       @endpoint DailyLogWeb.Endpoint

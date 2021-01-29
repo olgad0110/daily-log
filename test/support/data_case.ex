@@ -24,6 +24,7 @@ defmodule DailyLog.DataCase do
       import Ecto.Changeset
       import Ecto.Query
       import DailyLog.DataCase
+      import DailyLog.Factory
     end
   end
 

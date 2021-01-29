@@ -56,7 +56,12 @@ defmodule DailyLog.Calendar do
 
     Date.range(start_date, end_date)
     |> Enum.map(fn d ->
-      %Day{day: d.day, day_of_the_week: Date.day_of_week(d), date: d, log: Enum.find(logs, &(&1.day == d))}
+      %Day{
+        day: d.day,
+        day_of_the_week: Date.day_of_week(d),
+        date: d,
+        log: Enum.find(logs, &(&1.day == d))
+      }
     end)
   end
 end

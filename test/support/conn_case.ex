@@ -23,6 +23,7 @@ defmodule DailyLogWeb.ConnCase do
       import Plug.Conn
       import Phoenix.ConnTest
       import DailyLogWeb.ConnCase
+      import DailyLog.Factory
 
       alias DailyLogWeb.Router.Helpers, as: Routes
 
