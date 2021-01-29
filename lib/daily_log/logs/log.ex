@@ -25,6 +25,8 @@ defmodule DailyLog.Logs.Log do
     field(:mood_evening_bad, :string, virtual: true)
     field(:mood_evening_very_bad, :string, virtual: true)
 
+    field(:css_class, :string, virtual: true)
+
     timestamps()
   end
 end

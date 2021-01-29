@@ -1,10 +1,12 @@
 defmodule DailyLog.Calendar do
+  alias DailyLog.Logs
+
   defmodule Month do
     defstruct [:month, :month_name, :year, :days, :empty_days_before, :empty_days_after]
   end
 
   defmodule Day do
-    defstruct [:day, :day_of_the_week]
+    defstruct [:day, :day_of_the_week, :date, :log]
   end
 
   def build_month(date \\ Date.utc_today()) do
@@ -50,9 +52,11 @@ defmodule DailyLog.Calendar do
   defp to_range(number), do: 1..number
 
   defp build_days(start_date, end_date) do
+    logs = Logs.fetch_for_dates(start_date, end_date)
+
     Date.range(start_date, end_date)
     |> Enum.map(fn d ->
-      %Day{day: d.day, day_of_the_week: Date.day_of_week(d)}
+      %Day{day: d.day, day_of_the_week: Date.day_of_week(d), date: d, log: Enum.find(logs, &(&1.day == d))}
     end)
   end
 end

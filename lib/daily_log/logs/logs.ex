@@ -1,5 +1,6 @@
 defmodule DailyLog.Logs do
   alias DailyLog.{Logs.Log, Repo}
+  import Ecto.Query
 
   @mood_virtual_fields [
     :mood_morning_very_good,
@@ -46,6 +47,23 @@ defmodule DailyLog.Logs do
     changeset
     |> Repo.insert()
   end
+
+  def fetch_for_dates(start_date, end_date) do
+    from(l in Log, where: l.day >= ^start_date and l.day <= ^end_date)
+    |> Repo.all()
+    |> Enum.map(&populate_css_class(&1))
+  end
+
+  defp populate_css_class(log) do
+    [m, a, e] = log.mood
+    %{log | css_class: "gradient-#{css_class(m)}-#{css_class(a)}-#{css_class(e)}"}
+  end
+
+  defp css_class("very_bad"), do: "blue"
+  defp css_class("bad"), do: "blue-light"
+  defp css_class("neutral"), do: "grey-light"
+  defp css_class("good"), do: "orange-light"
+  defp css_class("very_good"), do: "orange"
 
   defp build_mood_list_from_params(params) do
     [
